@@ -1,0 +1,1 @@
+export { IRegistryController, RegistryController } from './registry'

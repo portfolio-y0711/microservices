@@ -1,0 +1,6 @@
+export { GetHome } from './get-home'
+export { GetCss } from './get-css'
+export { GetJs } from './get-js'
+export { GetImg } from './get-img'
+export { GetWebfonts } from './get-webfonts'
+export { GetBaseurl } from './get-baseurl'

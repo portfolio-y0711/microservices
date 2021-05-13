@@ -1,0 +1,20 @@
+a.media-left(href='#')
+    img.img-circle.img-sm(alt='Profile Picture' src='img/'+ '###logginuser.img' + '.png')
+.media-body
+    .mar-btm
+        a.btn-link.text-semibold.media-heading.box-inline(href='#') '#logginuser.name'
+        p.text-muted.text-sm
+            i.fa(class='###logginuser.deviceIcon').fa-lg
+            |  - From '###logginuser.device'
+hr
+
+form(method='post' action='http://localhost:3030/api/feed')
+    textarea.form-control(id='msg' name='msg' rows='2' placeholder='What are you thinking?')
+    input(type='hidden' id='access_token' name='access_token' value='###access_token')
+    .mar-top.clearfix
+        button.btn.btn-sm.btn-primary.pull-right(type='submit')
+            i.fas.fa-pencil-alt.fa-fw
+            |  Share
+        a.btn.btn-trans.btn-icon.fas.fa-video.add-tooltip(href='#')
+        a.btn.btn-trans.btn-icon.fas.fa-camera.add-tooltip(href='#')
+        a.btn.btn-trans.btn-icon.fas.fa-file.add-tooltip(href='#')
