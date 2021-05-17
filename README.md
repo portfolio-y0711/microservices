@@ -12,6 +12,8 @@ _부제: Swappable Deployment 가능한 마이크로서비스 아키텍처 구�
 
 <br/>
 
+[Trello 칸반보드 가기 >>>>>](https://trello.com/b/ozvP1SeR/microservices)
+
 목차 
 
 * 구성요소 (Components / v1.0.0)
