@@ -6,6 +6,12 @@ _부제: Swappable Deployment 가능한 마이크로서비스 아키텍처 구�
 
 ![microservice](./microservice.png)
 
+<br/>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/8N2ZynbBZqE/0.jpg)](https://www.youtube.com/watch?v=8N2ZynbBZqE)
+
+<br/>
+
 목차 
 
 * 구성요소 (Components / v1.0.0)
