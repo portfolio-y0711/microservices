@@ -10,7 +10,7 @@ const _session: session.SessionOptions = {
     resave: false,
     saveUninitialized: true,
     store: new FileStore({
-        path: path.join(__dirname, '../../service-session'),
+        path: path.join(__dirname, '../../../service-session'),
         reapInterval: 600,
     })
 }

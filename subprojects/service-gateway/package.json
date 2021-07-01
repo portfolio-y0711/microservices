@@ -5,20 +5,26 @@
   "license": "MIT",
   "bin": "bin/cli",
   "scripts": {
-    "dev": "nodemon -e ts -x 'yarn stop && ts-node -r tsconfig-paths/register --files bin/www.ts | bunyan -o short'",
+    "dev": "nodemon",
     "unit": "jest --config ./jest.unit.json --detectOpenHandles --forceExit --runInBand",
     "i": "jest --config ./jest.i11.json --detectOpenHandles --forceExit --runInBand",
     "e": "jest --config ./jest.e2e.json --detectOpenHandles --forceExit --runInBand",
     "lint": "yarn eslint src --ext ts",
-    "start": "bash deploy-local.sh",
-    "stop": "bash terminate-local.sh",
+    "start": "bash ./scripts/deploy-local.sh",
+    "probe": "bash ./scripts/get-run-process.sh",
+    "stop": "bash ./scripts/terminate-local.sh",
     "fstop": "bash terminate-local.sh",
-    "remote:start": "DOMAIN=http://portfolio-y0711.com bash deploy-remote.sh",
-    "remote:stop": "bash terminate-remote.sh"
+    "stage:start": "PRIVATE_KEY_PATH='/Users/yoonsung0711/.ssh/id_rsa' DOMAIN='http://stage' bash ./scripts/deploy-remote.sh 192.168.56.105",
+    "stage:_start": "DOMAIN='http://stage' bash ./scripts/deploy-remote.sh 192.168.56.105",
+    "stage:probe": "bash ./scripts/get-run-process.sh 192.168.56.105",
+    "stage:stop": "bash ./scripts/terminate-remote.sh 192.168.56.105",
+    "remote:start": "PRIVATE_KEY_PATH='/Users/yoonsung0711/.ssh/id_rsa' PROD=true DOMAIN='http://portfolio-y0711.com' bash ./scripts/deploy-remote.sh 192.168.200.120",
+    "remote:_start": "PROD=true DOMAIN='http://portfolio-y0711.com' bash ./scripts/deploy-remote.sh 58.140.200.197",
+    "remote:probe": "PROD=true bash ./scripts/get-run-process.sh 192.168.200.120",
+    "remote:stop": "bash ./scripts/terminate-remote.sh"
   },
   "dependencies": {
-    "@micro/utils": "^1.0.0",
-    "@types/jest": "^26.0.23",
+    "@macroserviced/utils": "^1.0.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "bunyan": "^1.8.15",
@@ -34,21 +40,26 @@
     "sqlite3": "^5.0.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.32",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "nodemon": "^2.0.7",
+    "amqplib": "^0.8.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^3.0.0",
+    "@types/axios": "^0.14.0",
     "@types/cookie-parser": "^1.4.2",
+    "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.11",
     "@types/express-session": "^1.17.3",
+    "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
-    "@types/node": "^14.14.41",
+    "@types/node": "^14.17.3",
     "@types/session-file-store": "^1.2.1",
     "@types/supertest": "^2.0.11",
     "jest": "^26.6.3",
     "jest-mock-extended": "^1.0.13",
     "supertest": "^6.1.3",
-    "ts-jest": "^26.5.4"
+    "ts-jest": "^26.5.4",
+    "@types/amqplib": "^0.8.0"
   }
 }

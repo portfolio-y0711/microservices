@@ -1,11 +1,24 @@
-import express, { Request, Response, NextFunction } from 'express'
-import path from 'path'
-import { Cors } from '../middleware'
+import express from 'express'
+import http from 'http'
+import { StaticWebServer } from './api/index'
+import { HttpServer } from './http'
+import { createRegistryConnector } from './http/registry'
+import { registryConfig } from '../config/index'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
-    const service = express()
-    service.use(Cors)
-    service.get('/api/health', (_: express.Request, res: express.Response) => { res.json({ status: 'up' }) })
-    service.use(express.static(path.join(__dirname, '../../dist')))
-    return service
+  const app = express()
+  const server = http.createServer(app)
+  const registryConnector = createRegistryConnector(registryConfig)
+
+  StaticWebServer
+    .injectApp(app)
+    .init()
+  
+  HttpServer
+    .injectServer(server)
+    .injectRegistryConnector(registryConnector)
+    .init()
+
+  return server
 }

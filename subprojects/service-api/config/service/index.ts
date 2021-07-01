@@ -9,19 +9,19 @@ const projects = {
     development: {
         name: name,
         version,
-        registryUrl: 'http://localhost:7000',
+        registryUrl: 'http://service-registry:7000',
         serviceTimeout: 30
     },
     production: {
         name: name,
         version,
-        registryUrl: 'http://localhost:7000',
+        registryUrl: 'http://service-registry:7000',
         serviceTimeout: 30
     },
     test: {
         name: name,
         version,
-        registryUrl: 'http://localhost:7000',
+        registryUrl: 'http://service-registry:7000',
         serviceTimeout: 30
     }
 }

@@ -18,7 +18,7 @@ export const dev: ConnectionOptions = {
     name: 'default',
     database: `./bin/dev.sqlite`,
     entities: [
-        'src/database/typeorm/entities/index.ts'
+        'src/data/database/typeorm/entities/index.ts'
     ],
     logging: false,
     dropSchema: true,
@@ -30,7 +30,7 @@ export const i11: ConnectionOptions = {
     name: 'default',
     database: `./tests/i11.sqlite`,
     entities: [
-        'src/database/typeorm/entities/index.ts'
+        'src/data/database/typeorm/entities/index.ts'
     ],
     logging: false,
     dropSchema: true,
@@ -42,7 +42,7 @@ export const e2e: ConnectionOptions = {
     name: 'default',
     database: `./tests/e2e.sqlite`,
     entities: [
-        'src/database/typeorm/entities/index.ts'
+        'src/data/database/typeorm/entities/index.ts'
     ],
     logging: false,
     // dropSchema: true,

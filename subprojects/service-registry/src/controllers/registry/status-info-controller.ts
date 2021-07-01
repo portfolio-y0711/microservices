@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import { IHttpResponse } from '@registry/typings'
-import { nextTick } from '@micro/utils'
+import { nextTick } from '@macroserviced/utils'
 
 export const StatusInfoController
     = () => {

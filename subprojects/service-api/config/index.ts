@@ -25,6 +25,7 @@ export interface IConfig {
         prod: ConnectionOptions, 
         i11: ConnectionOptions, 
         e2e: ConnectionOptions, 
+        seeder: ConnectionOptions, 
     },
     projects: {
         development: {

@@ -3,9 +3,8 @@ import { default as env } from './env'
 import { default as cors_ } from './cors'
 import { default as session } from './session'
 import { default as token, ITokenConfig } from './token'
-import { default as services } from './services'
-import { default as circuit } from './circuit'
-// import { default as finder, IFinderConfig } from './finder'
+import { default as services } from './registry'
+import { default as circuit } from './gateway/circuit'
 
 import bunyan from 'bunyan'
 import sess from 'express-session'
@@ -13,7 +12,7 @@ import cors from 'cors'
 
 import { getLogger } from './logger'
 import { ConnectionOptions } from 'typeorm'
-import { IWebService } from './services/index'
+import { IRegistryConfig } from './registry/index'
 import { ICircuitBreakerConfig } from '@gateway/typings/circuit-breaker'
 
 export interface IConfig {
@@ -31,8 +30,8 @@ export interface IConfig {
         e2e: ConnectionOptions, 
     },
     services: {
-        production: IWebService
-        development: IWebService
+        production: IRegistryConfig
+        development: IRegistryConfig
     },
     circuit: ICircuitBreakerConfig,
     // finder: IFinderConfig

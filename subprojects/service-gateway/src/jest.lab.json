@@ -1,0 +1,24 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testMatch": [
+    "<rootDir>./routes/**/lab.test.*.ts",
+    "<rootDir>./controllers/**/lab.test.*.ts",
+    "<rootDir>./services/**/lab.test.*.ts",
+    "<rootDir>./db/**/lab.test.*.ts",
+    "<rootDir>./middlewares/**/lab.test.*.ts"
+  ],
+  "testEnvironment": "node",
+  "transform": {
+    "^.+\\.(t)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@/auth/(.*)$": "<rootDir>/src/$1",
+    "@/tests/(.*)$": "<rootDir>/tests/$1"
+  },
+  "bail": true
+}

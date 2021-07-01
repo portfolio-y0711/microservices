@@ -5,26 +5,68 @@ const packageInfo = fs.readFileSync(path.join(__dirname, '../../package.json'), 
 
 const { name, version } = JSON.parse(packageInfo)
 
-const projects = {
-    development: {
-        name: name,
-        version,
-        registryUrl: 'http://localhost:7000',
-        serviceTimeout: 30
-    },
-    production: {
-        name: name,
-        version,
-        registryUrl: 'http://localhost:7000',
-        serviceTimeout: 30
-    },
-    test: {
-        name: name,
-        version,
-        registryUrl: 'http://localhost:7000',
-        serviceTimeout: 30
-    }
+export interface IRegistryConfig {
+  development: {
+    name: string 
+    version: string 
+    registryUrl: string
+    serviceTimeout: number
+  }
+  production: {
+    name: string 
+    version: string 
+    registryUrl: string
+    serviceTimeout: number
+  }
+  test: {
+    name: string 
+    version: string 
+    registryUrl: string
+    serviceTimeout: number
+  }
 }
 
 
-export default projects
+// const projects = {
+//   development: {
+//     name: name,
+//     version,
+//     registryUrl: 'http://localhost:7000',
+//     serviceTimeout: 30,
+//   },
+//   production: {
+//     name: name,
+//     version,
+//     registryUrl: 'http://localhost:7000',
+//     serviceTimeout: 30,
+//   },
+//   test: {
+//     name: name,
+//     version,
+//     registryUrl: 'http://localhost:7000',
+//     serviceTimeout: 30,
+//   },
+// }
+
+// export default projects
+
+export const registryConfig: IRegistryConfig = {
+  development: {
+    name: name,
+    version,
+    registryUrl: 'http://service-registry:7000',
+    serviceTimeout: 30,
+  },
+  production: {
+    name: name,
+    version,
+    registryUrl: 'http://service-registry:7000',
+    serviceTimeout: 30,
+  },
+  test: {
+    name: name,
+    version,
+    registryUrl: 'http://service-registry:7000',
+    serviceTimeout: 30,
+  },
+}

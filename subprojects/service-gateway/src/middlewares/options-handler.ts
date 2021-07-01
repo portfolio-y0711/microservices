@@ -11,12 +11,10 @@ export const OptionsHandler
         }
         if ((req.method === 'OPTIONS') && (requestMethod === 'GET' || requestMethod === 'POST') && requestHeader === 'content-type') {
             res.setHeader('Access-Control-Allow-Methods', 'POST,GET')
-            // res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
             res.setHeader('Access-Control-Allow-Headers', ['Content-Type', 'Authorization'])
         }
         if ((req.method === 'OPTIONS') && (requestMethod === 'PUT' || requestMethod === 'PUT,DELETE')) {
             res.setHeader('Access-Control-Allow-Methods', 'PUT,DELETE')
-            // res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
             res.setHeader('Access-Control-Allow-Headers', ['Content-Type', 'Authorization'])
         }
         next()

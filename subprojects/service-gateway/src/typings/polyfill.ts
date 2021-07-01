@@ -1,4 +1,4 @@
-import { IUser } from '@gateway/database/typeorm/entities'
+import { IUser } from '@gateway/data/database/typeorm/entities'
 
 declare module 'express-session' {
     interface SessionData {

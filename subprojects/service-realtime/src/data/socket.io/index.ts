@@ -1,0 +1,5 @@
+export { ISocketConnector } from './connection'
+export { createSocketConnector } from './connection'
+export { createChatService } from './namespaces'
+export { createFeedService } from './namespaces'
+export { createUserService } from './namespaces'
