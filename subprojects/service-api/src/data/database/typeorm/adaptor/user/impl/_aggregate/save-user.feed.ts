@@ -13,7 +13,7 @@ export const SaveUserFeed = (conn: IDBConnector) => {
     if (user.feeds.length === 0) {
       user.feeds = [feedUid]
     } else {
-      user.feeds.push(feedUid)
+      (user.feeds as string[]).push(feedUid)
     }
     await db
       .createQueryBuilder()

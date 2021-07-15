@@ -8,44 +8,43 @@ export const userFollowsTable: Map<EUserUid, Partial<User>> = new Map([
     "uuid": MICHAEL,
     "name": "Michael",
 		"leaders": [JENNY, TOM],
-		"followers": [TOM, ETHAN]
+		"followers": [JENNY, TOM]
 	}],
 	[JENNY,{
     "uuid": JENNY,
     "name": "Jenny",
-		"leaders": [JACKY, MIA, ETHAN],
-		"followers": [MICHAEL, JACKY]
+		"leaders": [MICHAEL, TOM],
+		"followers": [MICHAEL, TOM]
 	}],
 	[TOM, {
     "uuid": TOM,
     "name": "Tom",
-		"leaders": [MICHAEL],
-		"followers": [MICHAEL, /*JAMES,*/ ]
+		"leaders": [MICHAEL, JENNY],
+		"followers": [MICHAEL, JENNY]
 	}],
 	[JACKY, {
     "uuid": JACKY,
     "name": "Jacky",
-		"leaders": [JENNY, /*JAMES,*/ MARK
-		],
-		"followers": [JENNY, /*JAMES,*/ ]
+		"leaders": [MIA, MARK, ETHAN ],
+		"followers": [MIA, MARK, ETHAN ]
 	}],
 	[MIA, {
     "uuid": MIA,
     "name": "Mia",
-		"leaders": [ MARK, /*JAMES,*/ ],
-		"followers": [JENNY]
+		"leaders": [ETHAN, JACKY, MARK],
+		"followers": [ETHAN, JACKY, MARK]
 	}],
 	[ETHAN, {
     "uuid": ETHAN,
     "name": "Ethan",
-		"leaders": [MICHAEL, /*JAMES,*/ ],
-		"followers": [JENNY]
+		"leaders": [MIA, JACKY, MARK],
+		"followers": [MIA, JACKY, MARK]
 	}],
 	[MARK,{
     "uuid": MARK,
     "name": "Mark",
-		"leaders": [JENNY, MIA, JACKY],
-		"followers": [JACKY, MIA]
+		"leaders": [ETHAN, MIA, JACKY],
+		"followers": [ETHAN, MIA, JACKY]
 	}],
 	// [JAMES,{
   //   "uuid": JAMES,

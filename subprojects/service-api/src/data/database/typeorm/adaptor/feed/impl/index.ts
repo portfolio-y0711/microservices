@@ -1,0 +1,10 @@
+export { Create } from './c-r-u-d'
+export { Delete } from './c-r-u-d'
+export { Read } from './c-r-u-d'
+export { ReadAll } from './c-r-u-d'
+export { Update } from './c-r-u-d'
+
+export { FindFeedsByList } from './find-feeds-by-list'
+export { FindFeedsListWithComments } from './find-feeds-list-with-comments'
+export { FindOriginalPostWriter } from './find-original-post-writer'
+export { RemoveCommentFromParent } from './remove-comment-from-parent'

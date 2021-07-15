@@ -18,15 +18,16 @@ export const UpdateUserFeeds
             const feeds = await conn.createQueryBuilder()
               .select(['f.uuid'])
               .from(Feed, 'f')
-              .leftJoin('f.writer', 'fw')
-              .where('fw.uuid = :uuid', { uuid: leader })
+              .where('f.writerUid = :uuid', { uuid: leader })
+              .andWhere('f.parentUid = "0"')
               .getMany()
             const feedList: string[] = feeds.reduce((prev, curr) => {
-              prev.push(curr.uuid)
+                prev.push(curr.uuid)
+                
               return prev
             }, [] as string[])
-            const log = `feeds: ${userTable.get(_userUid)} has received ${feedList.length} feeds from ${userTable.get(leader as EUserUid)}`
-            user.feeds.push(...feedList)
+            const log = `feeds: ${userTable.get(_userUid)} has received ${feeds.length} feeds from ${userTable.get(leader as EUserUid)}`
+            ;(user.feeds as string[]).push(...feedList)
             await conn.getRepository(User)
               .save(user)
             logs.push(log)

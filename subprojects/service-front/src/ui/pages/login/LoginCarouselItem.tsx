@@ -2,17 +2,28 @@ import React, { useContext, useState, useRef, useEffect } from 'react'
 import { RootContext } from 'store/rootModelStore'
 import { Redirect } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
+import { RootServiceContext } from 'store'
 
-interface CarouselUserItemProps {
-  // selected_user: number
-}
+interface CarouselUserItemProps {}
 
-// const CarouselUserItem: React.FC<CarouselUserItemProps> = observer(({ selected_user }) => {
 const CarouselUserItem: React.FC<CarouselUserItemProps> = observer(() => {
+  const {
+    socketFeedService: {
+      joinFeedChannel
+    },
+    socketUserService: {
+      joinUserChannel
+    },
+    socketChatService: {
+      joinChatChannel
+    }
+  } = useContext(RootServiceContext)
+
   const [pass, form] = [useRef(), useRef()]
 
   const {
     authModel: { loginAction },
+    usersModel: { loginUser },
     uiModel: { setLoginModalRef, selectedLoginUser },
   } = useContext(RootContext)
 
@@ -29,7 +40,12 @@ const CarouselUserItem: React.FC<CarouselUserItemProps> = observer(() => {
   const processLogin = async (form: HTMLFormElement) => {
     const id = (form.elements as any)['id'].value
     const pass = (form.elements as any)['password'].value
-    return await loginAction({ uuid: id, password: pass })
+    const isSuccess = await loginAction({ uuid: id, password: pass })
+    if (isSuccess) {
+      return id
+    } else {
+      return false
+    }
   }
 
   useEffect(() => {
@@ -56,10 +72,13 @@ const CarouselUserItem: React.FC<CarouselUserItemProps> = observer(() => {
           type="button"
           onClick={async (e) => {
             e.preventDefault()
-            if (await processLogin(form.current)) {
+            let loginUserUid: string
+            if (loginUserUid = await processLogin(form.current)) {
               $('button[data-dismiss="modal"]').trigger('click')
               setLoginModalRef(null)
-              // history.push('/')
+              joinFeedChannel(loginUserUid)
+              joinUserChannel(loginUserUid)
+              joinChatChannel()
               setRedirect('/')
             } else {
               setLoginFailed(true)

@@ -31,7 +31,7 @@ export const GetUser = (config: IFetchConfig, baseUrl?: string) => {
         uuid,
         userDetail: { device, deviceIcon, img },
       } = data
-      const { leaders, followers, feeds } = data
+      const { leaders, followers, feeds, feedCursor } = data
       return {
         name,
         device,
@@ -41,6 +41,7 @@ export const GetUser = (config: IFetchConfig, baseUrl?: string) => {
         leaders,
         followers,
         feeds,
+        feedCursor
       } as UserType
     }
   }

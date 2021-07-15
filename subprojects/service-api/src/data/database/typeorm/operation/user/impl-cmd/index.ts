@@ -1,3 +1,2 @@
-export { RemoveUserLeader } from './_remove-user-leader'
-export { AddUserLeader } from './_add-user-leader'
 export { ToggleFollow } from './toggle-follow'
+export { AddUserPost } from './add-user-post'

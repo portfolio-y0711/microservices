@@ -1,15 +1,16 @@
 import { IDBConnector } from '@feed/data/database'
 import { Feed } from '@feed/data/database'
 
-import { Create } from './impl/c-r-u-d'
-import { ReadAll } from './impl/c-r-u-d'
-import { Read } from './impl/c-r-u-d'
-import { Update } from './impl/c-r-u-d'
-import { Delete } from './impl/c-r-u-d'
+import { Create } from './impl'
+import { ReadAll } from './impl'
+import { Read } from './impl'
+import { Update } from './impl'
+import { Delete } from './impl'
 
-import { ReadAllofUser } from './impl/read-all-of-user'
-import { FindFeedsByList } from './impl/find-feeds-by-list'
-import { PushFeedLiker } from './impl/push-feed-liker'
+import { FindFeedsByList } from './impl'
+import { FindFeedsListWithComments } from './impl'
+import { RemoveCommentFromParent } from './impl'
+import { FindOriginalPostWriter } from './impl'
 
 export interface IFeedAdaptor {
   create: (feed: Feed) => Promise<Feed>
@@ -17,8 +18,9 @@ export interface IFeedAdaptor {
   update: (feed: Feed) => Promise<Feed>
   delete_: (feedUid: string) => Promise<boolean>
   findFeedsByList: (feedlist: string[]) => Promise<Feed[]>
-  readAllofUser: (userUid: string) => Promise<Feed[]>
-  pushFeedLiker: ({ feedUid: feedUid, likerUid: likerUid }) => Promise<Feed>
+  findFeedsListWithComments: (feedUid: string) => Promise<string[]>
+  findOriginalPostWriter: (feedUid: string) => Promise<string>
+  removeCommentFromParent: (feedUid: string) => Promise<boolean>
 }
 
 export const FeedAdaptor = (conn: IDBConnector): IFeedAdaptor => {
@@ -28,17 +30,19 @@ export const FeedAdaptor = (conn: IDBConnector): IFeedAdaptor => {
   const update = Update(conn)
   const delete_ = Delete(conn)
   const findFeedsByList = FindFeedsByList(conn)
-  const readAllofUser = ReadAllofUser(conn)
-  const pushFeedLiker = PushFeedLiker(conn)
+  const findFeedsListWithComments = FindFeedsListWithComments(conn)
+  const findOriginalPostWriter = FindOriginalPostWriter(conn)
+  const removeCommentFromParent = RemoveCommentFromParent(conn)
 
   return Object.freeze({
-    findFeedsByList,
     readAll,
     create,
     delete_,
     update,
     read,
-    readAllofUser,
-    pushFeedLiker,
+    findFeedsByList,
+    findFeedsListWithComments,
+    findOriginalPostWriter,
+    removeCommentFromParent,
   })
 }

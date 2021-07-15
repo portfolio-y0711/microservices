@@ -1,0 +1,5 @@
+export { DeletePostConsumer } from './cmd-delete-post-consumer'
+export { PostCommentConsumer } from './cmd-post-comment-consumer'
+export { PostFeedConsumer } from './cmd-post-feed-consumer'
+export { PutThumbsdownConsumer } from './cmd-put-thumbs-down-consumer'
+export { PutThumbsupConsumer } from './cmd-put-thumbs-up-consumer'

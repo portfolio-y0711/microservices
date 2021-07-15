@@ -14,8 +14,8 @@ const FeedsModel = (service: IFeedsService) => {
   const getLoginUserFeedsCommand = async () => {
     runInAction(() => (store.loading = true))
     try {
-      // const data = await service.fetchFeeds()
       runInAction(async () => (store.feeds = await service.fetchFeeds()))
+      // runInAction(async () => (store.feeds = await service.fetchFeeds()))
     } catch (e) {
       alert('Something happened. Please try again later.')
     }
@@ -26,6 +26,7 @@ const FeedsModel = (service: IFeedsService) => {
     runInAction(() => (store.loading = true))
     try {
       runInAction(async () => (store.posts = await service.fetchPosts()))
+      // runInAction(async () => (store.posts = await service.fetchPosts()))
     } catch (e) {
       alert('Something happened. Please try again later.')
     }

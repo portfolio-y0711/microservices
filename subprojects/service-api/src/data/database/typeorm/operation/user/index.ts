@@ -5,29 +5,61 @@ import { ReadUser } from './impl-query'
 import { ReadLoginUserInfo } from './impl-query'
 import { ReadUserProfile } from './impl-query'
 
-import { AddUserLeader } from './impl-cmd'
-import { RemoveUserLeader } from './impl-cmd'
 import { ToggleFollow } from './impl-cmd'
+import { AddUserPost } from './impl-cmd/add-user-post'
+import { RemoveUserPost } from './impl-cmd/remove-user-post'
+import { RemoveUserFeed } from './impl-cmd/remove-user-feed'
+import { AddUserFeed } from './impl-cmd/add-user-feed'
+// import { RemoveFeedFromFollowers } from './impl-cmd/remove-read-from-followers'
+import { ReadUserFollowers } from './impl-query/read-user-followers';
 
 export interface IUserDatabase {
   readAll(): Promise<User[]>
   readLoginUserInfo(userUid: string): Promise<User>
   readUserProfile(userUid: string): Promise<User>
-  addUserLeader({
-    follower,
-    leader,
+  addUserPost({
+    userUid,
+    feedUid,
   }: {
-    follower: string
-    leader: string
+    userUid: string
+    feedUid: string
   }): Promise<boolean>
-  removeUserLeader({
-    follower,
-    leader,
+
+  addUserFeed({
+    userUid,
+    feedUid,
   }: {
-    follower: string
-    leader: string
+    userUid: string
+    feedUid: string
   }): Promise<boolean>
+
+  removeUserPost({
+    userUid,
+    feedUid
+  }: {
+    userUid: string,
+    feedUid: string
+  }): Promise<void>
+
+  removeUserFeed({
+    userUid,
+    feedUid,
+  }: {
+    userUid: string
+    feedUid: string
+  }): Promise<void>
+
   readUser(userUid: string): Promise<User>
+  // removeFeedFromFollowers({
+  //   userUid,
+  //   feedUid,
+  // }: {
+  //   userUid: string
+  //   feedUid: string
+  // }): Promise<void>
+
+  findUserFollowers(userUid: string): Promise<string[]>
+
   toggleFollow({
     follower,
     leader,
@@ -44,9 +76,16 @@ export const UserDatabase = (conn: IDBConnector): IUserDatabase => {
   const readUser = ReadUser(userAdaptor)
   const readLoginUserInfo = ReadLoginUserInfo(userAdaptor)
   const readUserProfile = ReadUserProfile(userAdaptor)
+  const addUserPost = AddUserPost(userAdaptor)
+  const addUserFeed = AddUserFeed(userAdaptor)
+  const removeUserPost = RemoveUserPost(userAdaptor)
+  const removeUserFeed = RemoveUserFeed(userAdaptor)
 
-  const addUserLeader = AddUserLeader({ user: userAdaptor })
-  const removeUserLeader = RemoveUserLeader({ user: userAdaptor })
+  const findUserFollowers = ReadUserFollowers(userAdaptor)
+  // const removeFeedFromFollowers = RemoveFeedFromFollowers(userAdaptor)
+  // const addUserLeader = AddUserLeader({ user: userAdaptor })
+  // const removeUserLeader = RemoveUserLeader({ user: userAdaptor })
+
   const toggleFollow = ToggleFollow({ user: userAdaptor })
 
   return {
@@ -54,9 +93,14 @@ export const UserDatabase = (conn: IDBConnector): IUserDatabase => {
     readLoginUserInfo,
     readUser,
     readAll,
-
-    addUserLeader,
-    removeUserLeader,
+    addUserPost,
+    removeUserPost,
+    removeUserFeed,
+    addUserFeed,
+    findUserFollowers,
+    // removeFeedFromFollowers,
+    // addUserLeader,
+    // removeUserLeader,
     toggleFollow,
   }
 }

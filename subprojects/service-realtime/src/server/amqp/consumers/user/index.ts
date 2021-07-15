@@ -1,0 +1,1 @@
+export { onUserUpdatedConsumer } from './on-user-updated-consumer'

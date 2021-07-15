@@ -1,18 +1,29 @@
 import { IFeedDatabase } from '@feed/data/database'
-import { Feed, IUser } from '@feed/data/database/typeorm/entities'
-import { PublishPost } from './services'
+import { IUserDatabase } from '@feed/data/database'
+import { Feed } from '@feed/data/database/typeorm/entities'
+import { PublishPost, AddComment, DeleteComment } from './services';
+// import { AddComment } from './services'
 import { DeleteFeed } from './services'
 import { ThumbsUpFeed } from './services'
 import { ThumbsDownFeed } from './services'
 
 export interface IFeedCmdService {
+  addComment: ({
+    feedUid,
+    commentUid,
+  }: {
+    feedUid: string
+    commentUid: string
+  }) => Promise<void>
   publishPost: ({
+    parentUid,
     writerUid,
     msg,
   }: {
+    parentUid: string
     writerUid: string
     msg: string
-  }) => Promise<IUser['uuid']>
+  }) => Promise<Feed['uuid']>
   thumbsUpFeed: ({
     feedUid,
     likerUid,
@@ -28,27 +39,38 @@ export interface IFeedCmdService {
     dislikerUid: string
   }) => Promise<Feed>
   deleteFeed: ({
-    ownerUid,
     feedUid,
-  }: { ownerUid: string, feedUid: string }) => Promise<boolean>
+  }: {
+    feedUid: string
+  }) => Promise<void>
+
+  deleteComment: ({
+    feedUid,
+  }: {
+    feedUid: string
+  }) => Promise<void>
 }
 
-export const FeedCmdService = (feedDB: IFeedDatabase): IFeedCmdService => {
-  const publishPost = PublishPost(feedDB)
+export const FeedCmdService = ({
+  feedDB,
+  userDB,
+}: {
+  feedDB: IFeedDatabase
+  userDB: IUserDatabase
+}): IFeedCmdService => {
+  const addComment = AddComment({ feedDB })
+  const publishPost = PublishPost({ feedDB, userDB })
   const thumbsUpFeed = ThumbsUpFeed(feedDB)
   const thumbsDownFeed = ThumbsDownFeed(feedDB)
   const deleteFeed = DeleteFeed(feedDB)
-
+  const deleteComment = DeleteComment(feedDB)
 
   return {
+    addComment,
     publishPost,
     thumbsUpFeed,
     thumbsDownFeed,
     deleteFeed,
+    deleteComment,
   }
 }
-
-/*
-    backlogs:
-
-*/

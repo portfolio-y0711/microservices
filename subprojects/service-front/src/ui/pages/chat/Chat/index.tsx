@@ -3,16 +3,23 @@ import { observer } from 'mobx-react-lite'
 import { Subscription } from 'rxjs'
 
 import Message from './Message'
-import { ChatMessage } from 'store/models/chat/model.chat'
 import { RootServiceContext } from 'store'
 import { RootContext } from 'store'
 
 const Chat = observer(() => {
   const {
-    socketChatService: { onMessage, send },
+    socketChatService: { 
+      onMessages,
+      send
+     },
+    apiChatService: { 
+      fetchChatMessages 
+    },
   } = useContext(RootServiceContext)
   const {
-    chatModel: { messages, setMessageCommand },
+    chatModel: { messages, 
+      setMessageCommand 
+    },
     usersModel: { loginUser },
   } = useContext(RootContext)
 
@@ -21,23 +28,30 @@ const Chat = observer(() => {
     img: loginUser.img,
     uuid: loginUser.uuid,
     name: loginUser.name,
-    msg: [],
+    msg: '',
   })
 
   useEffect(() => {
-    const subsMessage = (async () => {
-      const obs = await onMessage()
-      return obs.subscribe((m: ChatMessage) => {
-        messages.push(m)
+    const subsMessages = (async () => {
+      const obs = await onMessages()
+      return obs.subscribe(async (_) => {
+        const messages = await fetchChatMessages()
         setMessageCommand(messages)
       })
     })()
+    // const subsMessage = (async () => {
+    //   const obs = await onMessage()
+    //   return obs.subscribe((m: ChatMessage) => {
+    //     messages.push(m)
+    //     setMessageCommand(messages)
+    //   })
+    // })()
 
     inputRef.current.focus()
 
     return function cleanup() {
       async function unsubs() {
-        ;((await subsMessage) as Subscription).unsubscribe()
+        ;((await subsMessages) as Subscription).unsubscribe()
       }
       unsubs()
     }

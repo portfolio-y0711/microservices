@@ -11,4 +11,5 @@ export { GetUsers } from './users/get-users'
 export { GetUser } from './users/get-user'
 
 export { GetChatUsers } from './chat/get-chat-users'
+export { GetChatMessages } from './chat/get-chat-messages'
 export { GetChatServerURL } from './chat/get-chat-server-url'

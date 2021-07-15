@@ -16,20 +16,14 @@ const PostsPage = observer(() => {
   } = useContext(RootContext)
 
   const {
-    socketFeedService: { onPostSaved, onFeedUpdated },
+    socketFeedService: { onPostsUpdated },
   } = useContext(RootServiceContext)
 
   useEffect(() => {
     resetWriterInputCommand()
 
     const subsPostUpdated = (async () => {
-      const obs = await onFeedUpdated()
-      return obs.subscribe(async (_) => {
-        getLoginUserPostsCommand()
-      })
-    })()
-    const subsPostSaved = (async () => {
-      const obs = await onPostSaved()
+      const obs = onPostsUpdated()
       return obs.subscribe(async (_) => {
         getLoginUserPostsCommand()
       })
@@ -37,7 +31,6 @@ const PostsPage = observer(() => {
     getLoginUserPostsCommand()
     return () => {
       async function unsubs() {
-        ;((await subsPostSaved) as Subscription).unsubscribe()
         ;((await subsPostUpdated) as Subscription).unsubscribe()
       }
       unsubs()
@@ -53,7 +46,9 @@ const PostsPage = observer(() => {
           <div className="container bootdey">
             <div className="col-md-12 bootstrap snippets">
               <Writer />
-              <Feeder feeds={posts} />
+              <Feeder 
+              toShowPad={true}
+              feeds={posts} />
             </div>
           </div>
         </>

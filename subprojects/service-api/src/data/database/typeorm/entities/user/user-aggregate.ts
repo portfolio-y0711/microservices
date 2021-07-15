@@ -29,16 +29,16 @@ export class User {
   feedCursor: number
 
   @Column('simple-array')
-  posts: string[]
+  posts: string[] | string
 
   @Column('simple-array')
-  feeds: string[]
+  feeds: string[] | string
 
   @Column('simple-array')
-  leaders: string[]
+  leaders: string[] | string
 
   @Column('simple-array')
-  followers: string[]
+  followers: string[] | string
 }
 
 export interface IUser {
@@ -46,11 +46,11 @@ export interface IUser {
   uuid: string
   name: string
   userDetail?: UserDetail
-  posts?: Feed['uuid'][]
-  feeds?: Feed['uuid'][]
+  posts?: Feed['uuid'][] | string
+  feeds?: Feed['uuid'][] | string
   feedCursor?: number
-  leaders?: User['uuid'][]
-  followers?: User['uuid'][]
+  leaders?: User['uuid'][] | string
+  followers?: User['uuid'][] | string
 }
 
 export const CreateUser = () => {

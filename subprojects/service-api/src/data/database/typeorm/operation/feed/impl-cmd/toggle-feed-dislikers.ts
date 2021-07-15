@@ -32,7 +32,6 @@ export const ToggleFeedDislikers = (adaptors: IFeedAdaptors) => {
       likers: [..._likers],
       dislikers: [..._dislikers],
     })
-    console.log(updatedFeed)
     return updatedFeed
   }
 }

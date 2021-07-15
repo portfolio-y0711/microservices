@@ -1,4 +1,4 @@
-import { IUserDetail } from '@feed/data/database'
+import { IUserDetail, Feed } from '@feed/data/database';
 import { IUser } from '@feed/data/database'
 import { User } from '@feed/data/database'
 import { IFeed } from '@feed/data/database/typeorm/entities'
@@ -11,6 +11,8 @@ import { UpdateUserFollows } from './impl/update-user-follows'
 import { UpdateUserPosts } from './impl/update-user-posts'
 import { UpdateUserFeeds } from './impl/update-user-feeds'
 import { EUserUid } from '@config/data/typings'
+import { SeedComment } from './impl/seed-comment'
+import { UpdateNestedComments } from './impl/update-nested-comments'
 
 export interface ISeeder {
 	seedUserDetail: (userDetailSeeds: Partial<IUserDetail>[]) => Promise<string>
@@ -19,6 +21,8 @@ export interface ISeeder {
 	updateUserFollows: (userFollowUpdates: Partial<User>[]) => Promise<string>
 	updateUserFeeds: (userTable: Map<EUserUid, string>) => (userSelection: (EUserUid| EUserUid[])) => Promise<string>
 	updateUserPosts: (userTable: Map<EUserUid, string>) => (userSelection: (EUserUid| EUserUid[])) => Promise<string>
+	seedComment: (list: Partial<Feed>) => Promise<string>
+	updateNestedComments: (list: Partial<Feed[]>, name: string) => Promise<string>
 }
 
 const Seeder = (conn: Connection): ISeeder => {
@@ -28,6 +32,8 @@ const Seeder = (conn: Connection): ISeeder => {
 	const updateUserFollows = UpdateUserFollows(conn)
 	const updateUserPosts = UpdateUserPosts(conn)
 	const updateUserFeeds = UpdateUserFeeds(conn)
+	const seedComment =  SeedComment(conn)
+	const updateNestedComments = UpdateNestedComments(conn)
 
 	return {
 		seedUserDetail,
@@ -36,6 +42,8 @@ const Seeder = (conn: Connection): ISeeder => {
 		updateUserFollows,
 		updateUserFeeds,
 		updateUserPosts,
+		seedComment,
+		updateNestedComments
 	}
 }
 

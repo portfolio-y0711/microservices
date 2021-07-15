@@ -22,20 +22,10 @@ export const FetchAll = (userDB: IUserDatabase) => {
   }
 }
 
-// export const FollowFriend
-//     = (userDB: IUserDatabase) => {
-//         return async ({ loginUserUid, friendUid }: { loginUserUid: string, friendUid: string }): Promise<boolean> => {
-//             const result = await userDB.addUserLeader({ follower: loginUserUid, leader: friendUid })
-//             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-//             return result
-//         }
-//     }
 
-// export const UnfollowFriend
-//     = (userDB: IUserDatabase) => {
-//         return async ({ loginUserUid, friendUid }: { loginUserUid: string, friendUid: string }): Promise<boolean> => {
-//             const result = await userDB.removeUserLeader({ follower: loginUserUid, leader: friendUid })
-//             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-//             return result
-//         }
-//     }
+export const FetchUserSubscribers = (userDB: IUserDatabase) => {
+  return async (userUid: string): Promise<string[]> => {
+    const result = await userDB.findUserFollowers(userUid)
+    return result
+  }
+}

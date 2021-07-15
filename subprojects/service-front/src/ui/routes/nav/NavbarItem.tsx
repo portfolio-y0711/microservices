@@ -25,7 +25,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ id, link, icon, text, action, n
     <li id={id}>
       <a href={link} className="nav__link" data-link onClick={(e) => clickEventHandler(e)}>
         <i className={icon}>&nbsp;&nbsp;</i> {text}
-        {num !== undefined ? (
+        {(num !== undefined) && (num > 0) ? (
           <>
             <span style={{ marginLeft: '5px', marginTop: '-15px' }} className="badge badge-dot">
               {num}

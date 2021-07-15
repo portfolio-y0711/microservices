@@ -1,9 +1,6 @@
 import http from 'http'
 import cookieParser from 'cookie-parser'
-import express, {
-  RequestHandler,
-  Application,
-} from 'express'
+import express, { RequestHandler, Application } from 'express'
 import { ErrorRequestHandler } from 'express'
 
 export const ApiServer = (() => {

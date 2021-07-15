@@ -12,7 +12,6 @@ export const FindUserPostsList = (conn: IDBConnector) => {
       .select(['u.posts'])
       .where('u.uuid = :uuid', { uuid: userUid })
       .getOneOrFail()
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return posts
+    return posts as string[]
   }
 }

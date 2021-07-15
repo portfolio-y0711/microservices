@@ -1,49 +1,55 @@
 import { IAmqpConnector } from '../connection'
-import { PostFeedListener } from './feeds/post-feed-listener'
-import { PutFeedLikeListener } from './feeds/put-feed-like-listener'
 import { IFeedCmdService } from '@feed/services'
+import { IFeedQueryService } from '@feed/services'
+import { IUserQueryService } from '@feed/services'
 import { IUserCmdService } from '@feed/services'
-import { PutFeedDislikeListener } from './feeds/put-feed-dislike-listener'
-import { PutUserFollowToggleListener } from './users/put-toggle-follow-listener'
-import { PutFeedDeleteListener } from './feeds/put-feed-delete-listener'
+
+import { PostFeedConsumer } from './feeds/impl'
+import { PutThumbsupConsumer } from './feeds/impl'
+import { PutThumbsdownConsumer } from './feeds/impl'
+import { PutUserFollowToggleListener } from './users/impl'
+import { DeletePostConsumer } from './feeds/impl'
+import { PostCommentConsumer } from './feeds/impl'
 
 export interface IAmqpOperation {
-  postFeedListener: () => Promise<void>
-  putFeedLikeListener: () => Promise<void>
-  putFeedDislikeListener: () => Promise<void>
-  putFeedDeleteListener: () => Promise<void>
-  putUserFollowToggleListener: () => Promise<void>
-  init: () => Promise<void>
+  postCommentConsumer: Promise<void>
+  postFeedConsumer: Promise<void>
+  putThumbsupConsumer: Promise<void>
+  putThumbsdownConsumer: Promise<void>
+  deletePostConsumer: Promise<void>
+  putToggleFollowConsumer: Promise<void>
 }
 
-export const AmqpOperation = (
-  cmdServices: {
+export const AmqpOperation =
+  (services: {
     feedCmdService: IFeedCmdService
+    feedQueryService: IFeedQueryService
     userCmdService: IUserCmdService
-  }
-) => (
-  amqpConnector: IAmqpConnector,
-): IAmqpOperation => {
-    const postFeedListener = PostFeedListener(amqpConnector, cmdServices)
-    const putFeedLikeListener = PutFeedLikeListener(amqpConnector, cmdServices)
-    const putFeedDislikeListener = PutFeedDislikeListener(amqpConnector, cmdServices,)
-    const putFeedDeleteListener = PutFeedDeleteListener(amqpConnector, cmdServices)
-    const putUserFollowToggleListener = PutUserFollowToggleListener(amqpConnector, cmdServices)
-
-    const init = async () => {
-      await postFeedListener()
-      await putFeedLikeListener()
-      await putFeedDeleteListener()
-      await putFeedDislikeListener()
-      await putUserFollowToggleListener()
-    }
+    userQueryService: IUserQueryService
+  }) =>
+  (amqpConnector: IAmqpConnector): IAmqpOperation => {
+    const postCommentConsumer = PostCommentConsumer(amqpConnector, services)
+    const postFeedConsumer = PostFeedConsumer(amqpConnector, services)
+    const putThumbsupConsumer = PutThumbsupConsumer(amqpConnector, services)
+    const putThumbsdownConsumer = PutThumbsdownConsumer(
+      amqpConnector,
+      services,
+    )
+    const deletePostConsumer = DeletePostConsumer(
+      amqpConnector,
+      services,
+    )
+    const putToggleFollowConsumer = PutUserFollowToggleListener(
+      amqpConnector,
+      services,
+    )
 
     return {
-      postFeedListener,
-      putFeedLikeListener,
-      putFeedDislikeListener,
-      putUserFollowToggleListener,
-      putFeedDeleteListener,
-      init,
-    }
+      postFeedConsumer,
+      putThumbsupConsumer,
+      putThumbsdownConsumer,
+      putToggleFollowConsumer,
+      deletePostConsumer,
+      postCommentConsumer,
   }
+}

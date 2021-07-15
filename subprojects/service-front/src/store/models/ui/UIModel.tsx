@@ -23,12 +23,10 @@ const UIModel = (service: IUIService) => {
     runInAction(() => (store.loading = false))
   }
   const toggleWriterInputCommand = () => {
-    console.log('toggle writer called')
     store.showWriterPanel = !store.showWriterPanel
   }
-  
+
   const resetWriterInputCommand = () => {
-    console.log('reset writer called')
     store.showWriterPanel = true
   }
 

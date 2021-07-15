@@ -2,7 +2,7 @@ export interface ChatMessage {
   uuid: string
   name: string
   img: string
-  msg: string[]
+  msg: string
 }
 
 export type ChatStateType = {

@@ -36,7 +36,10 @@ const PostsTab: React.FC<PostsTabProps> = observer(() => {
   return (
     <div id="postsTab" className="tab-pane in active">
       <div className="row">
-        <Feeder feeds={posts}></Feeder>
+        <Feeder 
+        feeds={posts}
+        toShowPad={false}
+        ></Feeder>
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ interface MessageProps {
     uuid: string
     name: string
     img: string
-    msg: string[]
+    msg: string
   }
 }
 
@@ -24,14 +24,15 @@ const Message: React.FC<MessageProps> = ({ user }) => {
               <div className="chat-name">{user.name}</div>
             </div>
             <div className="chat-text">
-              {user.msg.map((m, index) => {
+              {/* {user.msg.map((m, index) => {
                 return (
                   <div key={index}>
                     {m}
                     <br />
                   </div>
                 )
-              })}
+              })} */}
+              {<div>{user.msg}</div>}
             </div>
             <div className="chat-hour">
               08:55 <span className="fa fa-check-circle"></span>
@@ -45,14 +46,15 @@ const Message: React.FC<MessageProps> = ({ user }) => {
               08:56 <span className="fa fa-check-circle"></span>
             </div>
             <div className="chat-text">
-              {user.msg.map((m, index) => {
+              {/* {user.msg.map((m, index) => {
                 return (
                   <div key={index}>
                     {m}
                     <br />
                   </div>
                 )
-              })}
+              })} */}
+              {<div>{user.msg}</div>}
             </div>
             <div className="chat-avatar">
               <img src={`/img/${user.img}.png`} alt="Retail Admin" />

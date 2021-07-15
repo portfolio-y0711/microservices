@@ -6,6 +6,8 @@ import { IFetchConfig } from 'typings'
 import { IFeedQueryType } from 'typings'
 import { IFeedCommandType } from 'typings'
 import { UserType } from 'typings'
+import { ChatMessage } from 'store/models/chat/model.chat'
+
 import { fetchConfig } from './fetch.config'
 
 import { GetFeeds } from './impl'
@@ -22,6 +24,7 @@ import { PutUser } from './impl'
 
 import { GetChatUsers } from './impl'
 import { GetChatServerURL } from './impl'
+import { GetChatMessages } from './impl';
 
 export interface IApi {
   login: (userUid: string, pass: string) => Promise<string>
@@ -38,6 +41,7 @@ export interface IApi {
     loginUserUid?: string,
   ) => Promise<boolean>
   getChatUsers: () => Promise<string[]>
+  getChatMessages: () => Promise<ChatMessage[]>
   getChatServerURL: () => Promise<string>
 }
 export const CreateApi = (config: IFetchConfig, baseUrl?: string): IApi => {
@@ -51,6 +55,7 @@ export const CreateApi = (config: IFetchConfig, baseUrl?: string): IApi => {
   const getUser = GetUser(config, baseUrl)
   const putFeed = PutFeed(config, baseUrl)
   const getChatUsers = GetChatUsers(config, baseUrl)
+  const getChatMessages = GetChatMessages(config, baseUrl)
   const getChatServerURL = GetChatServerURL(config, baseUrl)
 
   return {
@@ -64,6 +69,7 @@ export const CreateApi = (config: IFetchConfig, baseUrl?: string): IApi => {
     getUser,
     putFeed,
     getChatUsers,
+    getChatMessages,
     getChatServerURL,
   }
 }

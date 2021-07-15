@@ -70,6 +70,7 @@ const FriendsPage: React.FC<{ match: any }> = observer(({ match }) => {
                               img: 'nouser',
                               device: '',
                               deviceIcon: '',
+                              feedCursor: 0,
                               name: 'No User Selected',
                               uuid: loginUser.uuid,
                             }}

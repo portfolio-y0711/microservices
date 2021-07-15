@@ -10,10 +10,11 @@ export const SaveUserPost = (conn: IDBConnector) => {
         uuid: userUid,
       },
     })
+    
     if (user.posts.length === 0) {
       user.posts = [postUid]
     } else {
-      user.posts.push(postUid)
+      (user.posts as string[]).push(postUid)
     }
     await db
       .createQueryBuilder()

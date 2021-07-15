@@ -11,42 +11,40 @@ const ChatPage = observer(() => {
   const {
     usersModel: { loginUser },
     uiModel: { users },
-    chatModel: { chatUsers, setChatUsersCommand },
+    chatModel: { chatUsers, setChatUsersCommand, setMessageCommand },
   } = useContext(RootContext)
 
   const {
-    socketChatService: { onJoin, join, onLeave, leave },
-    apiChatService: { fetchChatUsers },
+    socketChatService: { onUserList, joinChat, leave },
+    apiChatService: { 
+      fetchChatUsers,
+      fetchChatMessages
+     },
   } = useContext(RootServiceContext)
 
   useEffect(() => {
+
     ;(async () => {
       const chatUsers = await fetchChatUsers()
+      const chatMessages = await fetchChatMessages()
       setChatUsersCommand(chatUsers)
+      setMessageCommand(chatMessages)
     })()
 
     const subsJoin = (async () => {
-      const obs = await onJoin()
-      return obs.subscribe(async () => {
+      const obs = await onUserList()
+      return obs.subscribe(async (_) => {
         const currUsers = await fetchChatUsers()
         setChatUsersCommand(currUsers)
       })
     })()
-    join(loginUser.uuid)
-
-    const subsLeave = (async () => {
-      const obs = await onLeave()
-      return obs.subscribe(async () => {
-        const currUsers = await fetchChatUsers()
-        setChatUsersCommand(currUsers)
-      })
-    })()
+    
+    joinChat(loginUser.uuid)
 
     return () => {
       leave(loginUser.uuid)
       async function unsubs() {
         ;((await subsJoin) as Subscription).unsubscribe()
-        ;((await subsLeave) as Subscription).unsubscribe()
       }
       unsubs()
     }

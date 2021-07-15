@@ -1,1 +1,0 @@
-export { feedSeeds } from './seeds.feed'

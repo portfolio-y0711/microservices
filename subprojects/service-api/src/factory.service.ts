@@ -13,9 +13,9 @@ import { FeedCmdService } from '@feed/services'
 import { IUserCmdService } from './services/cmd-service/user/index'
 
 export const createUserService = (
-  dbConn: IDBConnector,
+  dbConnector: IDBConnector,
 ): [IUserQueryService, IUserCmdService] => {
-  const userDatabase = UserDatabase(dbConn)
+  const userDatabase = UserDatabase(dbConnector)
   const userQueryService = UserQueryService(userDatabase)
   const userCmdService = UserCmdService(userDatabase)
   return [userQueryService, userCmdService]
@@ -25,7 +25,11 @@ export const createFeedService = (
   dbConnector: IDBConnector,
 ): [IFeedQueryService, IFeedCmdService] => {
   const feedDatabase = FeedDatabase(dbConnector)
+  const userDatabase = UserDatabase(dbConnector)
   const feedQueryService = FeedQueryService(feedDatabase)
-  const feedCmdService = FeedCmdService(feedDatabase)
+  const feedCmdService = FeedCmdService({
+    feedDB: feedDatabase,
+    userDB: userDatabase,
+  })
   return [feedQueryService, feedCmdService]
 }

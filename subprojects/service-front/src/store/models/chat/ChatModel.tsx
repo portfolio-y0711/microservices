@@ -3,14 +3,7 @@ import { ChatModelType, ChatStateType, ChatMessage } from './model.chat'
 
 const ChatModel = () => {
   const initialValues: ChatStateType = {
-    messages: [
-      {
-        name: 'Bot',
-        uuid: '32f9',
-        img: 'bot',
-        msg: ['Welcome!', 'Type a message and press Send Message to continue the chat.'],
-      },
-    ],
+    messages: [],
     chatUsers: [],
     loading: false,
   }

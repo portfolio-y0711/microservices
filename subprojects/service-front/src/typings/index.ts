@@ -23,18 +23,19 @@ export type UserType = {
   deviceIcon: string
   leaders?: string[]
   followers?: string[]
+  feedCursor: number
   feeds?: FeedType['uuid'][]
 }
 
 export type FeedType = {
   id?: string
   uuid?: string
-  writer: {
-    uuid: UserType['uuid']
-  }
+  writerUid: UserType['uuid']
   msg: string
-  replies?: FeedType[]
-  parent?: FeedType
+  // replies?: FeedType[]
+  // parent?: FeedType
+  childrenlist: string[]
+  parentUid: string
   likers?: UserType['uuid'][]
   dislikers?: UserType['uuid'][]
   createdAt?: string

@@ -12,7 +12,66 @@ export const ToggleFollow = (userDB: IUserDatabase) => {
       follower: loginUserUid,
       leader: friendUid,
     })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return result
+  }
+}
+
+export const AddUserFeedToList = (userDB: IUserDatabase) => {
+  return async ({
+    subscriberUid,
+    feedUid,
+  }: {
+    subscriberUid: string
+    feedUid: string
+  }): Promise<void> => {
+    await userDB.addUserFeed({
+      userUid: subscriberUid,
+      feedUid: feedUid  
+    })
+  }
+}
+
+export const RemoveFeedFromList = (userDB: IUserDatabase) => {
+  return async ({
+    subscriberUid,
+    feedUid,
+  }: {
+    subscriberUid: string
+    feedUid: string
+  }): Promise<void> => {
+    await userDB.removeUserFeed({
+      userUid: subscriberUid,
+      feedUid: feedUid,
+    })
+  }
+}
+
+export const RemovePostFromList = (userDB: IUserDatabase) => {
+  return async ({
+    loginUserUid,
+    postUid,
+  }: {
+    loginUserUid: string
+    postUid: string
+  }): Promise<void> => {
+    await userDB.removeUserPost({
+      userUid: loginUserUid,
+      feedUid: postUid,
+    })
+  }
+}
+
+export const AddUserPostToList = (userDB: IUserDatabase) => {
+  return async ({
+    loginUserUid,
+    postUid,
+  }: {
+    loginUserUid: string
+    postUid: string
+  }): Promise<void> => {
+    await userDB.addUserPost({
+      userUid: loginUserUid,
+      feedUid: postUid,
+    })
   }
 }

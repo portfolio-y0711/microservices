@@ -18,20 +18,17 @@ export const PushFeed = (
   createFeed: (userInput: IFeed) => Feed,
 ) => {
   return async ({
+    parentUid,
     writerUid,
     msg,
   }: {
+    parentUid: string
     writerUid: string
     msg: string
-  }): Promise<User['uuid']> => {
-    const { user, feed } = adaptors
-    const userId = await user.findUserId(writerUid)
-
-    const _feed = createFeed({ msg, writer: { ...stubUser, userId: userId } })
-
+  }): Promise<string> => {
+    const { feed } = adaptors
+    const _feed = createFeed({ parentUid, msg, writerUid })
     const result = await feed.create(_feed)
-
-    await user.saveUserPost(writerUid, _feed.uuid)
     return result.uuid
   }
 }

@@ -32,6 +32,7 @@ const FriendsNav: React.FC = observer(() => {
     const subsUserUpdated = (async () => {
       const obs = await onUserUpdated()
       return obs.subscribe(async (_) => {
+        console.log('!!!!!!!!!!!')
         getLoginUserCommand()
       })
     })()

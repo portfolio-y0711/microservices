@@ -5,7 +5,7 @@ import socketIO, { ManagerOptions, Socket, SocketOptions } from 'socket.io-clien
 export interface ISocketConnector {
   socketIO: Socket | undefined
   config: Partial<ManagerOptions & SocketOptions> | undefined
-  getSocket: (namespace: string) => Promise<Socket>
+  getSocket: (namespace: string, loginUserUid?: string) => Promise<Socket>
   socketStore: Map<string, Socket>
 }
 
@@ -21,10 +21,16 @@ export class SocketConnector implements ISocketConnector {
 
   async getSocket(namespace: string) {
     // const url = await api.getChatServerURL()
-    if (!this.socketStore.has(namespace)) {
-      this.socketStore.set(namespace, socketIO(`${baseUrl}/${namespace}`))
-    }
-    return this.socketStore.get(namespace)
+    // let io: Socket
+    // if (!this.socketStore.has(namespace)) {
+    //   io = socketIO(`${baseUrl}/${namespace}`)
+    //   if (loginUserUid) {
+    //     io.emit('joinRoom', { loginUserUid })
+    //   } 
+    //   this.socketStore.set(namespace, io)
+    // }
+
+    return socketIO(`${baseUrl}/${namespace}`)
   }
 }
 

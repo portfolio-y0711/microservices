@@ -1,17 +1,40 @@
 import { Feed } from '@feed/data/database/typeorm/entities'
-import { User } from '@feed/data/database/typeorm/entities'
 import { IFeedDatabase } from '@feed/data/database'
+import { IUserDatabase } from '@feed/data/database'
 
-export const PublishPost = (feedDB: IFeedDatabase) => {
+export const AddComment =
+  ({ feedDB }: { feedDB: IFeedDatabase }) =>
+  async ({
+    feedUid,
+    commentUid,
+  }: {
+    feedUid: string
+    commentUid: string
+  }): Promise<void> => {
+    await feedDB.pushComment({
+      originalFeedUid: feedUid,
+      commentFeedUid: commentUid,
+    })
+  }
+
+export const PublishPost = ({
+  feedDB,
+  userDB,
+}: {
+  feedDB: IFeedDatabase
+  userDB: IUserDatabase
+}) => {
   return async ({
+    parentUid,
     msg,
     writerUid,
   }: {
+    parentUid: string
     msg: string
     writerUid: string
-  }): Promise<User['uuid']> => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await feedDB.pushFeed({ msg, writerUid })
+  }): Promise<Feed['uuid']> => {
+    
+    return await feedDB.pushFeed({ parentUid, msg, writerUid })
   }
 }
 
@@ -50,11 +73,22 @@ export const ThumbsDownFeed = (feedDB: IFeedDatabase) => {
 
 export const DeleteFeed = (feedDB: IFeedDatabase) => {
   return async ({
-    ownerUid,
     feedUid,
-  }: { ownerUid: string, feedUid: string }): Promise<boolean> => {
-    await feedDB.removeFeed({ ownerUid, feedUid})
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return true
+  }: {
+    feedUid: string
+  }): Promise<void> => {
+    await feedDB.removeFeed({ feedUid })
+  }
+}
+
+
+export const DeleteComment = (feedDB: IFeedDatabase) => {
+  return async ({
+    feedUid,
+  }: {
+    feedUid: string
+  }): Promise<void> => {
+    
+    await feedDB.removeComment({ feedUid })
   }
 }

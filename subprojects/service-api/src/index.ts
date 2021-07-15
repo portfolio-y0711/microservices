@@ -28,17 +28,22 @@ export default async () => {
   ApiServer.injectApp(app)
     .injectLogger(logger)
     .injectErrorLogger(errLogger)
-    .injectRouter(Router({ userService: userQueryService, feedService: feedQueryService }))
+    .injectRouter(
+      Router({ userService: userQueryService, feedService: feedQueryService }),
+    )
     .injectServer(server)
     .init()
 
-  AmqpServer
-    .injectAmqpConnector(createAmqpConnector(amqpConfig))
-    .injectAmqpOperation(AmqpOperation({ feedCmdService, userCmdService }))
-    .init() 
+  AmqpServer.injectAmqpConnector(createAmqpConnector(amqpConfig))
+    .injectAmqpOperation(AmqpOperation({
+      feedCmdService, 
+      feedQueryService,
+      userCmdService,
+      userQueryService,
+    }))
+    .init()
 
-  HttpServer
-    .injectServer(server)
+  HttpServer.injectServer(server)
     .injectRegistryConnector(registryConnector)
     .init()
 

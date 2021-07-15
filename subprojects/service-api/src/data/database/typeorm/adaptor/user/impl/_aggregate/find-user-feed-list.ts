@@ -13,6 +13,6 @@ export const FindUserFeedList = (conn: IDBConnector) => {
       .where('u.uuid = :uuid', { uuid: userUid })
       .getOneOrFail()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return feeds
+    return feeds as string[]
   }
 }

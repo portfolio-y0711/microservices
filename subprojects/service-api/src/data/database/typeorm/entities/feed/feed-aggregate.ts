@@ -2,17 +2,16 @@ import {
   Entity,
   PrimaryColumn,
   Column,
-  Tree,
-  TreeChildren,
-  TreeParent,
-  ManyToOne,
+  // Tree,
+  // TreeChildren,
+  // TreeParent,
   Index,
 } from 'typeorm'
 import { uid4digit, uid8digit } from '@macroserviced/utils'
 import { User } from '../user/user-aggregate'
 
 @Entity()
-@Tree('materialized-path')
+// @Tree('materialized-path')
 export class Feed implements IFeed {
   @PrimaryColumn({ type: 'varchar', length: 8 })
   feedId: string
@@ -27,38 +26,37 @@ export class Feed implements IFeed {
   @Column()
   msg: string
 
-  @ManyToOne(() => User)
-  writer: User
+  @Column()
+  writerUid: string
 
-  // @Column('text', { array: true })
-  // likers?: string[]
-
-  @Column('text', { array: true })
+  @Column('simple-array')
   likers?: string[] | string
 
-  // @Column('text', { array: true })
-  // dislikers?: string[]
-
-  @Column('text', { array: true })
+  @Column('simple-array')
   dislikers?: string[] | string
 
-  @TreeChildren()
-  replies?: Feed[]
+  @Column('simple-array')
+  childrenlist?: string[] | string
 
-  @TreeParent()
-  parent?: Feed
+  @Column({
+    nullable: true
+  })
+  parentUid?: string
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt?: Date
+
+  children?: Feed[] | undefined
 }
 
 export interface IFeed {
   feedId?: string
   uuid?: string
-  writer: User
+  writerUid: string
+  childrenlist?: string[] | string
+  children?: Feed[]
+  parentUid?: string
   msg: string
-  replies?: Feed[]
-  parent?: Feed
   likers?: User['uuid'][] | User['uuid']
   dislikers?: User['uuid'][] | User['uuid']
   createdAt?: Date
@@ -79,6 +77,8 @@ export const CreateFeed =
             : dateTimeGenerator(),
       },
       ...{ feedId: feedIdGenerator() },
+      ...{ children: [] },
+      ...{ childrenlist: [] },
       ...{ uuid: uuidGenerator() },
       ...{ dislikers: [] },
       ...{ likers: [] },

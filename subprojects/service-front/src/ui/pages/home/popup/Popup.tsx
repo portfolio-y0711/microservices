@@ -10,6 +10,8 @@ import Notice0619 from './notices/Notice0619'
 import Notice0624 from './notices/Notice0624'
 import Notice0628 from './notices/Notice0628'
 import Notice0701 from './notices/Notice0701'
+import Notice0708 from './notices/Notice0708'
+import Notice0715 from './notices/Notice0715'
 
 const Popup: React.FC<{ text: string; closePopup: () => void }> = ({ text, closePopup }) => {
   return (
@@ -45,6 +47,10 @@ const Popup: React.FC<{ text: string; closePopup: () => void }> = ({ text, close
               {createChatMessage('June 28th, 2021', '6:00 PM')(Notice0628)}
 
               {createChatMessage('July 1st, 2021', '6:00 PM')(Notice0701)}
+
+              {createChatMessage('July 8th, 2021', '6:00 PM')(Notice0708)}
+
+              {createChatMessage('July 15th, 2021', '6:00 PM')(Notice0715)}
             </div>
           </div>
           <div className="popup-messages-footer"> </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { RootContext } from 'store/rootModelStore'
 import CarouselUserItem from './LoginCarouselItem'
 

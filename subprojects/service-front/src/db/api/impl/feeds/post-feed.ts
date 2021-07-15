@@ -1,6 +1,5 @@
 import { IFetchConfig } from 'typings'
 
-import { FeedType } from 'typings'
 import { urlEncoding } from 'db/api'
 
 export const PostFeed = (config: IFetchConfig, baseUrl?: string) => {

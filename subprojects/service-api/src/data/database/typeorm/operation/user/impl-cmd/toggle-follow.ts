@@ -16,8 +16,8 @@ export const ToggleFollow = ({ user }: { user: IUserAdaptor }) => {
         _follower.leaders == undefined
           ? (_follower.leaders = [_leader.uuid])
           : !_follower.leaders.includes(_leader.uuid)
-          ? _follower.leaders.push(_leader.uuid)
-          : (_follower.leaders = _follower.leaders.filter(
+          ? (_follower.leaders as string[]).push(_leader.uuid)
+          : (_follower.leaders = (_follower.leaders as string[]).filter(
               (leader) => leader !== _leader.uuid,
             ))
       }
@@ -26,8 +26,8 @@ export const ToggleFollow = ({ user }: { user: IUserAdaptor }) => {
         _leader.followers == undefined
           ? (_leader.followers = [_follower.uuid])
           : !_leader.followers.includes(_follower.uuid)
-          ? _leader.followers.push(_follower.uuid)
-          : (_leader.followers = _leader.followers.filter(
+          ? (_leader.followers as string[]).push(_follower.uuid)
+          : (_leader.followers = (_leader.followers as string[]).filter(
               (follower) => follower !== _follower.uuid,
             ))
       }

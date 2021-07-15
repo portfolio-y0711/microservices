@@ -9,16 +9,18 @@ export const HttpServer = (() => {
     return {
       init,
       injectServer,
-      injectRegistryConnector
+      injectRegistryConnector,
     }
   }
 
-  const injectRegistryConnector = (_listener: (server: http.Server) => Promise<void>) => {
+  const injectRegistryConnector = (
+    _listener: (server: http.Server) => Promise<void>,
+  ) => {
     listener = _listener
     return {
       init,
       injectServer,
-      injectRegistryConnector
+      injectRegistryConnector,
     }
   }
 
@@ -28,12 +30,12 @@ export const HttpServer = (() => {
 
   const init = () => {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    server.on('listening', async() => listener(server))
+    server.on('listening', async () => listener(server))
   }
   return {
     init,
     injectServer,
     getServer,
-    injectRegistryConnector
+    injectRegistryConnector,
   }
 })()

@@ -12,7 +12,7 @@ export const ToggleFeedLikers = (adaptors: IFeedAdaptors) => {
     const { feed } = adaptors
 
     const currentFeed = await feed.read(feedUid)
-
+    
     const _dislikers = Array.from(
       new Set([...(currentFeed.dislikers as any), likerUid]),
     ).filter((disliker: string) => {
@@ -32,7 +32,6 @@ export const ToggleFeedLikers = (adaptors: IFeedAdaptors) => {
       dislikers: [..._dislikers],
       likers: [..._likers],
     })
-    console.log(updatedFeed)
     return updatedFeed
   }
 }

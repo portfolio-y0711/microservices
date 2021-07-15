@@ -7,34 +7,25 @@ export const AmqpServer = (() => {
 
   const injectAmqpConnector = (_amqpConnector: IAmqpConnector) => {
     amqpConnector = _amqpConnector
-    return {
-      injectAmqpConnector,
-      injectAmqpOperation,
-      init
-    }
+    return { ...interfaces }
   }
 
-  const injectAmqpOperation = (_amqpOperation: (amqpConnector: IAmqpConnector) => IAmqpOperation) => {
+  const injectAmqpOperation = (
+    _amqpOperation: (amqpConnector: IAmqpConnector) => IAmqpOperation,
+  ) => {
     amqpOperation = _amqpOperation
-    return {
-      injectAmqpConnector,
-      injectAmqpOperation,
-      init
-    }
+    return { ...interfaces }
   }
 
   const init = () => {
-    void amqpOperation(amqpConnector).init()
-    return {
-      injectAmqpConnector,
-      injectAmqpOperation,
-      init
-    }
+    amqpOperation(amqpConnector)
+    return { ...interfaces }
   }
-
-  return {
+  const interfaces = {
     injectAmqpConnector,
     injectAmqpOperation,
-    init
+    init,
   }
+
+  return { ...interfaces }
 })()

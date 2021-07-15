@@ -1,4 +1,5 @@
-import { EUserUid, UserOption } from '@config/data/typings'
+// import { EUserUid, UserOption } from '@config/data/typings'
+import { EUserUid, UserOption } from '../typings'
 import { LoadFromPath } from './load-from-path'
 import { UserSelectiveLoadFromTable } from './selective-load-from-table'
 import { UserSelectiveUpdatesLoadFromTable } from './selective-updates-load-from-table'

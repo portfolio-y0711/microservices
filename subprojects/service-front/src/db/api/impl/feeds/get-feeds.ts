@@ -22,29 +22,26 @@ export const GetFeeds = (config: IFetchConfig, baseUrl?: string) => {
       const rawFeeds: {
         uuid: string
         msg: string
-        writer: { uuid: string }
-        likers: string
-        dislikers: string
+        writerUid: string
+        likers: string[]
+        dislikers: string[]
+        parentUid: string
+        childrenlist: string[]
       }[] = await response.json()
       feeds = rawFeeds.map((raw) => {
-        return {
+         return ({
           uuid: raw.uuid,
           msg: raw.msg,
-          writer: raw.writer,
-          likers: raw.likers.split(','),
-          dislikers: raw.dislikers.split(','),
-        }
+          writerUid: raw.writerUid,
+          likers: raw.likers,
+          dislikers: raw.dislikers,
+          parentUid: raw.parentUid,
+          childrenlist: raw.childrenlist,
+        })
       })
-      // feeds = rawFeeds.map(raw => ({
-      //     uuid: raw.uuid,
-      //     msg: raw.msg,
-      //     writer: raw.writer,
-      //     likers: raw.likers.split(','),
-      //     dislikers: raw.dislikers.split(',')
-      // }))
-      return feeds
-    } else {
-      return []
-    }
+        return feeds
+      } else {
+        return []
+      }
   }
-}
+  }

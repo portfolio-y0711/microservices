@@ -1,18 +1,18 @@
 import { createContext } from 'react'
-import { ISocketChatService } from '../socket/services/chat/SocketService'
+import { ISocketChatService } from '../socket/opertation/chat/SocketService'
 
 import { api } from '../db/api'
 import createApiChatService from 'db/services/chat/index'
 import { IChatService } from '../db/services/chat/index'
 
 import { SocketConnector } from '../socket/connection'
-import createSocketChatService from 'socket/services/chat/SocketService'
+import createSocketChatService from 'socket/opertation/chat/SocketService'
 
-import createSocketFeedService from 'socket/services/feeds/SocketService'
-import { ISocketFeedService } from 'socket/services/feeds/SocketService'
+import createSocketFeedService from 'socket/opertation/feeds/SocketService'
+import { ISocketFeedService } from 'socket/opertation/feeds/SocketService'
 
-import createSocketUserService from 'socket/services/users/SocketService'
-import { ISocketUserService } from 'socket/services/users/SocketService'
+import createSocketUserService from 'socket/opertation/users/SocketService'
+import { ISocketUserService } from 'socket/opertation/users/SocketService'
 
 type RootServiceType = {
   socketChatService: ISocketChatService

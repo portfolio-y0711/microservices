@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { RootContext } from 'store'
+import { RootContext, RootServiceContext } from 'store'
 
 interface DropdownNavbarItemProps {
   id: string
@@ -15,12 +15,23 @@ const LogoutNavbar: React.FC<DropdownNavbarItemProps> = ({ id, link, icon, text 
     usersModel: { loginUser, removeLoginUserCommand },
   } = useContext(RootContext)
 
+  const {
+    socketFeedService: {
+      leaveFeedChannel,
+    },
+    socketUserService: {
+      leaveUserChannel,
+    }
+  } = useContext(RootServiceContext)
+
   const history = useHistory()
 
   const logoutEventHandler = (e) => {
     e.preventDefault()
     logoutAction()
     removeLoginUserCommand()
+    leaveFeedChannel()
+    leaveUserChannel()
     history.push('/')
   }
 

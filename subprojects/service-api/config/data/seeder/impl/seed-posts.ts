@@ -15,7 +15,7 @@ export const SeedFeed
 				const writer = await conn.getRepository(User)
 					.findOneOrFail({
 						where: {
-							uuid: _feed.writer.uuid
+							uuid: _feed.writerUid
 						}
 					})
 
@@ -24,12 +24,14 @@ export const SeedFeed
 						feedId: _feed.feedId,
 						uuid: _feed.uuid,
 						msg: _feed.msg,
-						writer,
+						writerUid: _feed.writerUid,
+						parentUid: _feed.parentUid,
 						createdAt: _feed.createdAt,
+						childrenlist: _feed.childrenlist,
 						likers: [...(_feed.likers !== undefined ? _feed.likers : [])],
 						dislikers: [...(_feed.dislikers !== undefined ? _feed.dislikers : [])],
 					}))
-				logs.push(`posts: ${saved.writer.name} ${saved.uuid} ${saved.feedId} is created at ( ${saved.createdAt.toLocaleString()} )`)
+				logs.push(`posts: ${writer.name} ${saved.uuid} ${saved.feedId} is created at ( ${saved.createdAt.toLocaleString()} )`)
 			}
 			return logs.join(`\n`)
 		}

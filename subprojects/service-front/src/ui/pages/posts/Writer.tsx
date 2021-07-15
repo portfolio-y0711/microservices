@@ -3,7 +3,7 @@ import { KeyboardEvent, useEffect, useContext, useRef } from 'react'
 import { RootContext } from 'store'
 import { RootServiceContext } from 'store'
 
-interface WriterProps { }
+interface WriterProps {}
 
 const Writer: React.FC<WriterProps> = observer(() => {
   const inputRef: React.LegacyRef<HTMLTextAreaElement> = useRef(null)
@@ -23,7 +23,7 @@ const Writer: React.FC<WriterProps> = observer(() => {
     if (inputRef.current!.value.trim() == '') {
       return
     }
-    post({ loginUserUid: loginUser.uuid, msg: inputRef.current.value })
+    post({ parentUid: "0", loginUserUid: loginUser.uuid, msg: inputRef.current.value })
     inputRef.current!.value = ''
   }
 
@@ -37,7 +37,7 @@ const Writer: React.FC<WriterProps> = observer(() => {
         if (inputRef.current!.value.trim() == '') {
           return
         }
-        post({ loginUserUid: loginUser.uuid, msg: inputRef.current.value })
+        post({ parentUid: "0", loginUserUid: loginUser.uuid, msg: inputRef.current.value })
         inputRef.current!.value = ''
         $(e.target as HTMLTextAreaElement).val('')
       }
@@ -54,11 +54,9 @@ const Writer: React.FC<WriterProps> = observer(() => {
   return (
     <div
       className="panel"
-      style={
-        {
-          backgroundColor: showWriterPanel ? '#f1f3f5' : undefined,
-        }
-      }
+      style={{
+        backgroundColor: showWriterPanel ? '#f1f3f5' : undefined,
+      }}
     >
       <div className="panel-body">
         <a className="media-left" href="#">
@@ -92,32 +90,38 @@ const Writer: React.FC<WriterProps> = observer(() => {
         </div>
         {showWriterPanel ? (
           <>
-          <hr />
-          <form name="feedform">
-            <textarea
-              ref={inputRef}
-              className="form-control"
-              name="msg"
-              id="msg"
-              rows={2}
-              onKeyPress={handleKeyPress}
-              onChange={updateInput}
-              placeholder="What are you thinking?"
-            ></textarea>
-            <input type="hidden" name="access_token" id="access_token" value="#access_token" />
-            <div className="mar-top clearfix">
-              <button onClick={postFeed} className="btn btn-sm btn-primary pull-right" type="button">
-                <i className="fas fa-pencil-alt fa-fw"></i>
-                Publish
-              </button>
+            <hr />
+            <form name="feedform">
+              <textarea
+                ref={inputRef}
+                className="form-control"
+                name="msg"
+                id="msg"
+                rows={2}
+                onKeyPress={handleKeyPress}
+                onChange={updateInput}
+                placeholder="What are you thinking?"
+              ></textarea>
+              <input type="hidden" name="access_token" id="access_token" value="#access_token" />
+              <div className="mar-top clearfix">
+                <button
+                  onClick={postFeed}
+                  className="btn btn-sm btn-primary pull-right"
+                  type="button"
+                >
+                  <i className="fas fa-pencil-alt fa-fw"></i>
+                  Publish
+                </button>
 
-              <button className="btn btn-trans btn-icon fas fa-video add-tooltip"></button>
-              <button className="btn btn-trans btn-icon fas fa-camera add-tooltip"></button>
-              <button className="btn btn-trans btn-icon fas fa-file add-tooltip"></button>
-            </div>
-          </form>
+                <button className="btn btn-trans btn-icon fas fa-video add-tooltip"></button>
+                <button className="btn btn-trans btn-icon fas fa-camera add-tooltip"></button>
+                <button className="btn btn-trans btn-icon fas fa-file add-tooltip"></button>
+              </div>
+            </form>
           </>
-        ) : (<></>) }
+        ) : (
+          <></>
+        )}
         {/*
          */}
       </div>

@@ -1,4 +1,4 @@
-interface FeedsTabProps {}
+interface FeedsTabProps { }
 
 const FeedsTab: React.FC<FeedsTabProps> = () => {
   return (

@@ -5,8 +5,7 @@ export const Logout = (config: IFetchConfig, baseUrl?: string) => {
     const response = await fetch(`${baseUrl ? baseUrl : 'http://localhost:8000'}/api/auth/logout`, {
       ...config.POST,
     })
-    const data = await response.json()
-    console.log(data)
+    await response.json()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return true
   }
